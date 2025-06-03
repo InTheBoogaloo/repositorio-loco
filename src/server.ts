@@ -26,7 +26,7 @@ const server = express()
 //permitiy conexiones
 const corsOptions: CorsOptions = {
     origin: function (origin, callback) {
-        if(origin === process.env.FRONTEND_URL || origin==='http://localhost:4000/'){
+        if(origin === process.env.FRONTEND_URL || origin==='https://repositorio-loco-frontend.vercel.app/'){
             callback(null,true)
         }else{
             callback(new Error('Error de CORS'))

@@ -1,39 +1,42 @@
-import swaggerJSDoc  from "swagger-jsdoc";
+import swaggerJSDoc from "swagger-jsdoc";
 import { SwaggerUiOptions } from "swagger-ui-express";
 
-const options: swaggerJSDoc.Options= {
+const options : swaggerJSDoc.Options= {
     swaggerDefinition: {
-        openapi:'3.0.2',
-        tags:[{
-            name:'Products',
-            description:'API operation related to products'
-        }
+        openapi: '3.0.2',
+        tags:[
+            {
+                name: "Products",
+                description: 'API operations related to products'
+
+            }
         ],
-         info:{
-            title:'REST API Node.js / Express / Typescript',
-            version:'1.0.0',
-            description:'API Docs for products'
+        info:  {
+            title: 'REST API Node.js / Express /TypeScript',
+            version: "1.0.0",
+            description: "API Docs for Products"
         }
-       
     },
-    apis:['./src/router.ts']
+
+    apis: ['./src/router.ts']
 }
 
 const swaggerSpec = swaggerJSDoc(options)
-const SwaggerUiOptions: SwaggerUiOptions = {
-    customCss: `
-        .topbar-wrapper .link {
-            content: url('https://www.infobae.com/new-resizer/9MRXZlMzwmiyAa-tTwWTVmXeBu8=/arc-anglerfish-arc2-prod-infobae/public/QWJHXUGY25BDFM3NHCCXFX4WVY.JPG');
-            height:190px;
-            width:500px;
+const swaggerUiOptions : SwaggerUiOptions ={
+    customCss : `
+        .topbar-wrapper .link{
+            content: url('https://cdn-icons-png.freepik.com/512/11753/11753796.png');
+            height: 90px;
+            width: auto;
         }
         .swagger-ui .topbar{
-            background-color: cyan
+            background-color: #2b3b45;
         }
     `,
-    customSiteTitle: 'Otra documentacion mas'
-};
+    customSiteTitle: 'Documentacion REST API Express / TypeScript'
+}
+
 export default swaggerSpec
 export{
-    SwaggerUiOptions
+    swaggerUiOptions
 }

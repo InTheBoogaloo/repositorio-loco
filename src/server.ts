@@ -1,26 +1,50 @@
-import  express  from "express"
+import express from 'express'
 import router from './router'
 import db from './config/db'
 import colors from 'colors'
-import SwaggerUi from "swagger-ui-express"
-import swaggerSpec,{SwaggerUiOptions}from "./config/swagger"
+import cors, {CorsOptions} from 'cors'
+import morgan from 'morgan'
+import swaggerUI from 'swagger-ui-express'
+import swaggerSpec, {swaggerUiOptions} from './config/swagger'
 
-//conectar a bd
-export async function connectDB(){
-    try{
-        await db.authenticate()
-    db.sync()
-    //console.log(colors.green('Conexion exitosa a la base de datos'))
-    } catch (error){
-        console.error()
-        console.log(colors.red('Hubo un error al conectar a la BD'))
+//Conectar a base de datos
+export async function connectDB() {
+    try {
+        db.authenticate()
+        db.sync()
+        console.log(colors.magenta('Conexion exitosa a la BD'))
+    } catch (error) {
+        console.log(error)
+        console.log(colors.red.bold('Hubo un error al conectar a la BD'))
+    }
+}
+connectDB()
+
+//Instancia de express
+const server = express()
+
+//permitiy conexiones
+const corsOptions: CorsOptions = {
+    origin: function (origin, callback) {
+        if(origin === process.env.FRONTEND_URL || origin==='http://localhost:4000/'){
+            callback(null,true)
+        }else{
+            callback(new Error('Error de CORS'))
+        }
     }
 }
 
-connectDB()
-const server = express()
+server.use(cors(corsOptions));
+
+
+//Leer datos de formularios
 server.use(express.json())
+
+server.use(morgan('dev'))
 server.use('/api/products', router)
-server.use('/docs', SwaggerUi.serve,SwaggerUi.setup(swaggerSpec, SwaggerUiOptions))
+
+//Docs
+server.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec, swaggerUiOptions))
+
 
 export default server

@@ -22,7 +22,7 @@ connectDB()
 
 //Instancia de express
 const server = express()
-
+//
 //permitiy conexiones
 const corsOptions: CorsOptions = {
     origin: function (origin, callback) {

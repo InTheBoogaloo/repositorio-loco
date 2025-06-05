@@ -31,7 +31,14 @@ export const getProductById = async (req: Request, res: Response, next: NextFunc
 
 export const createProduct = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const product = await Product.create(req.body)
+        const { name, price, image_url } = req.body
+
+        const product = await Product.create({
+            name,
+            price,
+            image_url: image_url?.trim() === "" ? null : image_url
+        })
+
         res.status(201).json({data: product}) // Sin return
     } catch (error) {
         next(error)
